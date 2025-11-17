@@ -1,40 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const videos = ["/vid/video-1.mp4", "/vid/video-2.mp4", "/vid/video-3.mp4"];
+const images = [
+	"/img/main-banner-1.jpg",
+	"/img/main-banner-2.jpg",
+	"/img/main-banner-3.jpg",
+];
 
-export default function VideoCarousel() {
+export default function ImageCarousel() {
 	const [current, setCurrent] = useState(0);
-	const videoRef = useRef<HTMLVideoElement | null>(null);
 
 	useEffect(() => {
-		const video = videoRef.current;
-		if (!video) return;
+		const interval = setInterval(() => {
+			setCurrent((prev) => (prev + 1) % images.length);
+		}, 3000); // 3 seconds
 
-		const handleEnd = () => {
-			setCurrent((prev) => (prev + 1) % videos.length);
-		};
-
-		video.addEventListener("ended", handleEnd);
-		video.play().catch(() => {});
-
-		return () => video.removeEventListener("ended", handleEnd);
-	}, [current]);
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
 		<div className="video-carousel-wrapper">
 			<h2>Explore Our Services</h2>
-			<video
-				ref={videoRef}
-				src={videos[current]}
+
+			<img
+				src={images[current]}
+				alt="carousel"
 				className="video-carousel-video"
-				preload="auto"
-				muted
-				playsInline
-				autoPlay
 			/>
 
 			<div className="video-carousel-dots">
-				{videos.map((_, index) => (
+				{images.map((_, index) => (
 					<div
 						key={index}
 						className={`dot ${

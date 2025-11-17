@@ -17,28 +17,28 @@ function Header() {
 	// 	{ img: "/img/balcony-cleaning.jpeg", text: " Balcony Cleaning" },
 	// ];
 
-	const topGridNew = [
-		{
-			title: "Home Cleaning",
-			img: "/img/home-icon.jpeg",
-			offer: "Get 100 Rs Off",
-		},
-		{
-			title: "Bathroom Cleaning",
-			img: "/img/bathroom-icon.jpg",
-			offer: "Get 100 Rs Off",
-		},
-		{
-			title: "Carpet Cleaning",
-			img: "/img/carpet-icon.jpeg",
-			offer: "Get 199 Rs Off",
-		},
-		{
-			title: "Kitchen Cleaning",
-			img: "/img/kitchen-icon.jpg",
-			offer: "Get 249 Rs Off",
-		},
-	];
+	// const topGridNew = [
+	// 	{
+	// 		title: "Home Cleaning",
+	// 		img: "/img/home-icon.jpeg",
+	// 		offer: "Get 100 Rs Off",
+	// 	},
+	// 	{
+	// 		title: "Bathroom Cleaning",
+	// 		img: "/img/bathroom-icon.jpg",
+	// 		offer: "Get 100 Rs Off",
+	// 	},
+	// 	{
+	// 		title: "Carpet Cleaning",
+	// 		img: "/img/carpet-icon.jpeg",
+	// 		offer: "Get 199 Rs Off",
+	// 	},
+	// 	{
+	// 		title: "Kitchen Cleaning",
+	// 		img: "/img/kitchen-icon.jpg",
+	// 		offer: "Get 249 Rs Off",
+	// 	},
+	// ];
 
 	return (
 		<header className="header">
@@ -52,21 +52,21 @@ function Header() {
 					))}
 				</div> */}
 
-				<div className="offer-grid">
+				{/* <div className="offer-grid">
 					{topGridNew.map((item, i) => (
 						<div key={i} className="offer-card">
 							<h3>{item.title}</h3>
-							{/* <img
+							<img
 								src={item.img}
 								alt={item.title}
 								className="offer-img"
-							/> */}
+							/>
 							<div className="offer-footer">
 								{item.offer}
 							</div>
 						</div>
 					))}
-				</div>
+				</div> */}
 
 				<div className="search-section">
 					<div className="search-bar">
