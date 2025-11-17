@@ -10,8 +10,8 @@ function Homepage() {
 	return (
 		<section>
 			<Carousel />
-			<HorizontalSwipeSlider />
 			<LookingFor />
+			<HorizontalSwipeSlider />
 			<MostBooked />
 			<Packages />
 			<WhyChooseUs />

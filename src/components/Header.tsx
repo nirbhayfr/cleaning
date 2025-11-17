@@ -56,11 +56,11 @@ function Header() {
 					{topGridNew.map((item, i) => (
 						<div key={i} className="offer-card">
 							<h3>{item.title}</h3>
-							<img
+							{/* <img
 								src={item.img}
 								alt={item.title}
 								className="offer-img"
-							/>
+							/> */}
 							<div className="offer-footer">
 								{item.offer}
 							</div>
