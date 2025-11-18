@@ -44,6 +44,10 @@ function Header() {
 					))}
 				</div> */}
 
+				<div className="header-logo">
+					<img src="/img/logo-no-bg.png" alt="Logo" />
+				</div>
+
 				<ImageCarousel />
 				<SearchInput />
 			</div>
