@@ -346,7 +346,7 @@
 /* Active dot animates filling */
 .dot.active::after {
 	width: 100%;
-	animation: fillProgress 3s linear;
+	transition-duration: var(--fill-time);
 }
 
 /* Keyframes for filling */
