@@ -121,7 +121,7 @@
 }
 
 .loc-icon {
-	color: #444;
+	color: var(--color-primary);
 }
 
 .divider {

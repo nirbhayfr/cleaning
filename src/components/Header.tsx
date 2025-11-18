@@ -44,8 +44,8 @@ function Header() {
 					))}
 				</div> */}
 
-				<SearchInput />
 				<ImageCarousel />
+				<SearchInput />
 			</div>
 		</header>
 	);
