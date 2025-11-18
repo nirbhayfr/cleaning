@@ -7,7 +7,7 @@ const images = [
 ];
 
 export default function ImageCarousel() {
-	const [current, setCurrent] = useState(0);
+	const [current, setCurrent] = useState(1);
 
 	useEffect(() => {
 		const interval = setInterval(() => {

@@ -54,6 +54,8 @@
 	width: 150px;
 	height: auto;
 	object-fit: contain;
+
+	filter: brightness(1.4) contrast(0.8);
 }
 
 /* Grid layout */
