@@ -1,10 +1,4 @@
-import {
-	Home,
-	MessageCircleMore,
-	Phone,
-	ShoppingCart,
-	Tag,
-} from "lucide-react";
+import { Home, MessageCircleMore, Phone, Tag, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -58,12 +52,12 @@ function Menubar() {
 
 			<Link
 				className={`menu-item ${
-					pathname === "/cart" ? "active" : ""
+					pathname === "/profile" ? "active" : ""
 				}`}
 				to="#"
 			>
-				<ShoppingCart size={22} />
-				<span>Cart</span>
+				<User size={26} />
+				<span>Profile</span>
 			</Link>
 		</nav>
 	);

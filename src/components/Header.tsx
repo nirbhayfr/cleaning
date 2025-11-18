@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react";
 import ImageCarousel from "./home/Carousel";
 import SearchInput from "./Search";
 
@@ -44,8 +45,21 @@ function Header() {
 					))}
 				</div> */}
 
-				<div className="header-logo">
-					<img src="/img/logo-no-bg.png" alt="Logo" />
+				<div className="header-logo-row">
+					<div className="header-logo">
+						<img src="/img/logo-no-bg.png" alt="Logo" />
+					</div>
+
+					<div className="header-cart">
+						<div className="cart-icon-wrap">
+							<ShoppingCart
+								className="cart-icon"
+								size={20}
+							/>
+
+							<span className="cart-badge">3</span>
+						</div>
+					</div>
 				</div>
 
 				<ImageCarousel />
