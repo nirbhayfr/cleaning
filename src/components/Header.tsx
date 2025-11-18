@@ -1,22 +1,7 @@
-import { Search } from "lucide-react";
+import ImageCarousel from "./home/Carousel";
+import SearchInput from "./Search";
 
 function Header() {
-	// const topGrid = [
-	// 	{
-	// 		img: "/img/top-1.jpeg",
-	// 		text: "Bedroom Cleaning",
-	// 	},
-	// 	{ img: "/img/top-2.jpeg", text: "Kitchen Cleaning" },
-	// 	{ img: "/img/top-3.jpeg", text: "Bathroom Cleaning" },
-	// 	{ img: "/img/top-4.jpeg", text: "Carpet Cleaning" },
-	// ];
-
-	// const bottomGrid = [
-	// 	{ img: "/img/commercial-cleaning.jpg", text: "Commercial Cleaning" },
-	// 	{ img: "/img/home-cleaning.jpeg", text: "Home cleaning" },
-	// 	{ img: "/img/balcony-cleaning.jpeg", text: " Balcony Cleaning" },
-	// ];
-
 	// const topGridNew = [
 	// 	{
 	// 		title: "Home Cleaning",
@@ -43,15 +28,6 @@ function Header() {
 	return (
 		<header className="header">
 			<div className="header-bg">
-				{/* <div className="top-features">
-					{topGrid.map((item, i) => (
-						<div key={i} className="feature-card">
-							<img src={item.img} alt={item.text} />
-							<span>{item.text}</span>
-						</div>
-					))}
-				</div> */}
-
 				{/* <div className="offer-grid">
 					{topGridNew.map((item, i) => (
 						<div key={i} className="offer-card">
@@ -68,29 +44,8 @@ function Header() {
 					))}
 				</div> */}
 
-				<div className="search-section">
-					<div className="search-bar">
-						<Search className="search-icon" />
-						<input
-							type="text"
-							placeholder="Search for service..."
-						/>
-					</div>
-				</div>
-
-				{/* <div className="bottom-grid">
-					{bottomGrid.map((item, i) => (
-						<div
-							key={i}
-							className="bottom-card"
-							style={{
-								backgroundImage: `url(${item.img})`,
-							}}
-						>
-							<p>{item.text}</p>
-						</div>
-					))}
-				</div> */}
+				<ImageCarousel />
+				<SearchInput />
 			</div>
 		</header>
 	);

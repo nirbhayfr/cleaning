@@ -1,4 +1,3 @@
-import Carousel from "./Carousel";
 import LookingFor from "./LookingSection";
 import MostBooked from "./MostBooked";
 import Packages from "./Packages";
@@ -9,7 +8,6 @@ import HorizontalSwipeSlider from "./HorizontalSlider";
 function Homepage() {
 	return (
 		<section>
-			<Carousel />
 			<LookingFor />
 			<HorizontalSwipeSlider />
 			<MostBooked />

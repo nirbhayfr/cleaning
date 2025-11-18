@@ -19,8 +19,6 @@ export default function ImageCarousel() {
 
 	return (
 		<div className="video-carousel-wrapper">
-			<h2>Explore Our Services</h2>
-
 			<img
 				src={images[current]}
 				alt="carousel"
