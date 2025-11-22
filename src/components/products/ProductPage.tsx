@@ -1,5 +1,5 @@
 import ProductCategory from "./ProductCategory";
-import { services } from "../../../data/data.js";
+import { services } from "../../../data/data.ts";
 
 function ProductPage() {
 	return (
