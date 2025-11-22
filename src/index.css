@@ -4,7 +4,9 @@
 :root {
 	font-family: "Poppins", sans-serif;
 	--color-primary: oklch(54.6% 0.245 262.881);
+	--color-secondary: oklch(50% 0.134 242.749);
 	--color-primary-light-bg: oklch(97% 0.014 254.604);
+	--color-secondary-bg: #f8f9fa;
 
 	--color-primary-50: #eff6ff;
 	--color-primary-100: #dbeafe;
@@ -17,8 +19,6 @@
 	--color-primary-800: #1e40af;
 	--color-primary-900: #1e3a8a;
 	--color-primary-950: #172554;
-
-	--color-secondary: oklch(50% 0.134 242.749);
 }
 
 /* ---- Header Start ---- */
@@ -220,6 +220,140 @@
 
 .menu-item.active svg {
 	color: var(--color-primary-600);
+}
+
+/* Center Floating Button */
+.floating-center-btn {
+	position: fixed;
+	bottom: 80px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 999;
+	background: var(--color-primary-800);
+	border: none;
+	padding: 12px 14px;
+	border-radius: 50px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: white;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	animation: fadeIn 0.2s ease-out;
+}
+
+/* Popup Box */
+.popup-content {
+	width: 85%;
+	max-width: 350px;
+	background: white;
+	border-radius: 16px;
+	padding: 20px;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+	animation: scaleIn 0.25s ease-out;
+	position: relative;
+}
+
+.popup-title {
+	text-align: center;
+	margin-bottom: 15px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.popup-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 14px;
+	padding: 16px;
+}
+
+.popup-card {
+	background: #fff;
+	border-radius: 14px;
+	overflow: hidden;
+	cursor: pointer;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	transition: 0.25s ease;
+	display: flex;
+	flex-direction: column;
+}
+
+.popup-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.popup-card img {
+	width: 100%;
+	height: 80px;
+	object-fit: cover;
+	display: block;
+}
+
+/* Label under image */
+.popup-card p {
+	text-align: center;
+	padding: 8px 0;
+	font-size: 0.85rem;
+	font-weight: 500;
+	margin: 0;
+}
+
+.popup-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 32px;
+	height: 32px;
+	border: none;
+	border-radius: 50%;
+	background: #ffffff;
+	color: #333;
+	font-size: 18px;
+	font-weight: bold;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+	transition: 0.2s ease;
+}
+
+.popup-close-btn:hover {
+	transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes scaleIn {
+	from {
+		transform: scale(0.85);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 
 /* ---- MenuBar End ---- */
@@ -516,6 +650,7 @@
 	border: 1px solid #e1e5ec;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 	transition: 0.2s ease;
+	position: relative;
 }
 
 .looking-card:hover {
@@ -544,6 +679,74 @@
 	margin: 0;
 }
 
+/* Backdrop */
+.lf-popup-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	z-index: 900;
+}
+
+/* Bottom popup container */
+.lf-bottom-popup {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: -50%;
+	height: 30%;
+	background: #fff;
+	border-radius: 18px 18px 0 0;
+	padding: 20px;
+	transition: bottom 0.35s ease;
+	z-index: 999;
+}
+.lf-bottom-popup.open {
+	bottom: 0;
+}
+
+/* Close button */
+.lf-popup-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 14px;
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+/* Grid inside popup */
+.lf-popup-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 14px;
+	margin-top: 40px;
+}
+
+/* Each card */
+.lf-popup-card {
+	background: #f4f4f4;
+	padding: 16px;
+	border-radius: 12px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Text */
+.lf-popup-text h4 {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0;
+}
+
+/* Image box */
+.lf-popup-image-box img {
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+}
+
 /* 📱 Tablet */
 @media (min-width: 600px) {
 	.looking-grid {
@@ -563,6 +766,32 @@
 	.looking-card img {
 		height: 100px;
 	}
+}
+
+/* Coming Soon Tag */
+.coming-tag {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	background: #ff5252;
+	color: white;
+	font-size: 0.6rem;
+	font-weight: 600;
+	padding: 3px 6px;
+	border-radius: 6px;
+	z-index: 2;
+}
+
+/* Faded effect for coming soon cards */
+.looking-card.faded {
+	opacity: 0.7;
+	filter: grayscale(5%) brightness(0.9);
+	pointer-events: none; /* prevents clicking */
+}
+
+/* Optional: fade the text too */
+.looking-card.faded p {
+	color: #888;
 }
 
 /* ---- HomePage LookingFor End ---- */
@@ -968,3 +1197,312 @@
 /* ---- HomePage Reviews End---- */
 
 /* ---- HomePage End ---- */
+
+/* ---- Products Page Start ---- */
+.products {
+	background-color: var(--color-secondary-bg);
+}
+
+/* ---- Products Header Start ---- */
+.products-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 16px;
+	background: #fff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.products-back-btn,
+.products-cart-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: none;
+	background: #f5f5f5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.products-header-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+}
+
+/* ---- Products Header End ---- */
+
+/* ---- Products Filter Start ---- */
+.products-filters {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 16px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.filter-box {
+	position: relative;
+	background: #f4f4f4;
+	padding: 10px 12px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+}
+
+/* Dropdown box */
+.dropdown {
+	position: absolute;
+	top: 105%;
+	left: 0;
+	width: 100%;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+	overflow: hidden;
+	z-index: 20;
+}
+
+/* Dropdown item */
+.dropdown-item {
+	padding: 10px 12px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: 0.2s;
+}
+
+.dropdown-item:hover {
+	background: #f0f0f0;
+}
+
+/* Highlight active choice */
+.dropdown-item.active {
+	background: #e6e6e6;
+	font-weight: 600;
+}
+
+/* ---- Products Filter End ---- */
+
+/* ---- Products Category Start---- */
+.product-section {
+	padding: 20px;
+}
+
+.product-title {
+	font-size: 1.4rem;
+	font-weight: 600;
+}
+
+.product-sub {
+	color: #555;
+	font-size: 0.9rem;
+	margin-bottom: 18px;
+}
+
+.product-sub span {
+	color: grey;
+}
+
+/* Grid */
+.product-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 14px;
+}
+
+/* Card */
+.product-card {
+	background: #fff;
+	border-radius: 14px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	padding: 14px;
+	display: grid;
+	grid-template-columns: 60% 40%;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+}
+
+.product-info h3 {
+	font-size: 1rem;
+	margin-bottom: 6px;
+	font-weight: 600;
+}
+
+.product-info p {
+	font-size: 10px;
+	font-weight: 300;
+}
+
+.product-rating {
+	font-size: 0.85rem;
+	color: #555;
+	margin-bottom: 6px;
+}
+
+.product-rating span {
+	color: grey;
+}
+
+/* Prices */
+.product-price {
+	font-size: 1rem;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+
+.old-price {
+	text-decoration: line-through;
+	color: grey;
+	font-size: 0.9rem;
+}
+
+.new-price {
+	color: #111;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+/* Image box */
+.product-img-box {
+	position: relative;
+	width: 96px;
+	height: 96px;
+	margin: 0 auto;
+}
+
+.product-img-box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 12px;
+}
+
+/* Add button half-overlapping */
+.add-btn {
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 4px 12px;
+	font-size: 0.8rem;
+	border: none;
+	border-radius: 5px;
+	background: var(--color-primary);
+	color: white;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+}
+
+/* View details button */
+.details-btn {
+	margin-top: 16px;
+	width: 100%;
+	background: #f5f5f5;
+	border: none;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	color: #333;
+}
+
+/* Larger screens */
+@media (min-width: 640px) {
+	.product-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 900px) {
+	.product-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* ---- Products Category Slider Start ---- */
+
+/* Wrapper */
+.hsw-wrapper {
+	padding: 10px;
+	background: #fff;
+}
+
+/* Heading */
+.hsw-heading {
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+/* Horizontal scroll container */
+.hsw-container {
+	display: flex;
+	gap: 14px;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	padding-bottom: 8px;
+}
+
+.hsw-container::-webkit-scrollbar {
+	display: none;
+}
+
+/* Individual card */
+.hsw-card {
+	min-width: 100px;
+	background: #ffffff;
+	border-radius: 14px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	padding: 10px;
+	scroll-snap-align: start;
+	position: relative;
+	text-align: center;
+}
+
+/* Image */
+.hsw-img {
+	width: 100%;
+	height: 60px;
+	object-fit: cover;
+	border-radius: 12px;
+}
+
+/* Title text */
+.hsw-title {
+	font-size: 0.8rem;
+	margin-top: 8px;
+	font-weight: 500;
+}
+
+/* Button */
+.hsw-btn {
+	margin-top: 10px;
+	background: var(--color-primary);
+	color: #fff;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 0.85rem;
+}
+
+/* ---- Products Category Slider End ---- */
+
+/* ---- Products Category End ---- */
+
+/* ---- Products Page End ---- */
