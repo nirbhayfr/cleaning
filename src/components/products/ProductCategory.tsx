@@ -1,14 +1,17 @@
+import { addToCart } from "../../store/cartSlice";
+import { useAppDispatch } from "../../store/hooks";
 import CategorySlider from "./layout/CategorySlider";
 import ProductsFilters from "./layout/Filters";
 
 interface Service {
 	title: string;
 	serviceRating: number;
-
+	id: string;
 	price: string;
 	description: string;
 	discountPrice: string;
 	images: string[];
+	quantity: number;
 }
 
 interface Data {
@@ -24,6 +27,7 @@ export default function ProductCategory({
 	bookings,
 	services,
 }: Data) {
+	const dispatch = useAppDispatch();
 	return (
 		<>
 			<ProductsFilters />
@@ -65,7 +69,14 @@ export default function ProductCategory({
 									alt={service.title}
 								/>
 
-								<button className="add-btn">ADD</button>
+								<button
+									className="add-btn"
+									onClick={() =>
+										dispatch(addToCart(service))
+									}
+								>
+									ADD
+								</button>
 							</div>
 
 							<button className="details-btn">

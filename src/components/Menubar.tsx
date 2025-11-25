@@ -1,6 +1,7 @@
 import { Home, MessageCircleMore, Phone, Tag, User, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { topCategories } from "../../data/data";
 
 function Menubar() {
 	const [hideMenu, setHideMenu] = useState(false);
@@ -55,37 +56,15 @@ function Menubar() {
 						</button>
 
 						<div className="popup-grid">
-							<div className="popup-card">
-								<img
-									src="/img/bathroom-cleaning.jpg"
-									alt=""
-								/>
-								<p>Bathroom</p>
-							</div>
-
-							<div className="popup-card">
-								<img
-									src="/img/kitchen-cleaning.jpg"
-									alt=""
-								/>
-								<p>Kitchen</p>
-							</div>
-
-							<div className="popup-card">
-								<img
-									src="/img/home-cleaning.jpeg"
-									alt=""
-								/>
-								<p>Home</p>
-							</div>
-
-							<div className="popup-card">
-								<img
-									src="/img/glass-cleaning.jpg"
-									alt=""
-								/>
-								<p>Glass</p>
-							</div>
+							{topCategories[0].cards.map((card) => (
+								<div
+									className="popup-card"
+									key={card.title}
+								>
+									<img src={card.img} alt="" />
+									<p>{card.title}</p>
+								</div>
+							))}
 						</div>
 					</div>
 				</div>

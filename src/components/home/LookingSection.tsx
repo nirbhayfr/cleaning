@@ -1,56 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { topCategories } from "../../../data/data";
 
 export default function LookingFor() {
 	const [activePopup, setActivePopup] = useState<string | null>(null);
 
-	const topCategories = [
-		{
-			key: "cleaning",
-			title: "Cleaning Service",
-			img: "/img/office-cleaning.jpg",
-			cards: [
-				{
-					title: "Home Deep Cleaning",
-					img: "/img/sofa.png",
-				},
-				{
-					title: "Kitchen Cleaning",
-					img: "/img/sink.png",
-				},
-			],
-		},
-		{
-			key: "fullhouse",
-			title: "Full House Cleaning",
-			img: "/img/banner-2.jpg",
-			cards: [
-				{
-					title: "1 BHK Deep Clean",
-					img: "/img/sofa.png",
-				},
-				{
-					title: "2 BHK Deep Clean",
-					img: "/img/sink.png",
-				},
-			],
-		},
-		{
-			key: "commercial",
-			title: "Commercial Cleaning",
-			img: "/img/commercial-cleaning.jpg",
-			cards: [
-				{
-					title: "Office Cleaning",
-					img: "/img/sofa.png",
-				},
-				{
-					title: "Shop Cleaning",
-					img: "/img/sink.png",
-				},
-			],
-		},
-	];
 	const comingSoon = [
 		{ title: "Female Home Salon", img: "/img/hair-salon.jpeg" },
 		{ title: "Electrician", img: "/img/electrician.jpeg" },

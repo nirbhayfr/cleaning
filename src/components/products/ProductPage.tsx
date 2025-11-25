@@ -1,14 +1,14 @@
 import ProductCategory from "./ProductCategory";
-import { services } from "../../../data/data.ts";
+import { topCategories } from "../../../data/data.ts";
 
 function ProductPage() {
 	return (
 		<section>
 			<ProductCategory
-				title="Home Cleaning"
+				title={topCategories[0].title}
 				rating={4.5}
 				bookings="1k+"
-				services={services}
+				services={topCategories[0].services!}
 			/>
 		</section>
 	);

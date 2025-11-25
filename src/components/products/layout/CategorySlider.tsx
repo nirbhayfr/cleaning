@@ -1,23 +1,29 @@
-export default function CategorySlider() {
-	const slides = [
-		{ img: "/img/bathroom-cleaning.jpg", title: "Bathroom Deep Clean" },
-		{ img: "/img/banner-3.jpg", title: "Kitchen Cleaning" },
-		{ img: "/img/home-cleaning.jpeg", title: "Home Cleaning" },
-		{ img: "/img/glass-cleaning.jpg", title: "Glass Cleaning" },
-	];
+import { topCategories } from "../../../../data/data";
 
+export default function CategorySlider() {
 	return (
 		<div className="hsw-wrapper">
 			<div className="hsw-container">
-				{slides.map((slide, i) => (
-					<div className="hsw-card" key={i}>
+				{/* {topCategories.map((cat) =>
+					cat.cards.map((card, i) => (
+						<div className="hsw-card" key={`${cat.key}-${i}`}>
+							<img
+								src={card.img}
+								className="hsw-img"
+								alt={card.title}
+							/>
+							<p className="hsw-title">{card.title}</p>
+						</div>
+					))
+				)} */}
+				{topCategories[0].cards.map((card, i) => (
+					<div className="hsw-card" key={`${card.title}-${i}`}>
 						<img
-							src={slide.img}
+							src={card.img}
 							className="hsw-img"
-							alt={slide.title}
+							alt={card.title}
 						/>
-
-						<p className="hsw-title">{slide.title}</p>
+						<p className="hsw-title">{card.title}</p>
 					</div>
 				))}
 			</div>
