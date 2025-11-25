@@ -1507,3 +1507,103 @@
 /* ---- Products Category End ---- */
 
 /* ---- Products Page End ---- */
+
+
+/* MAIN CONTAINER */
+
+.container {
+    width: auto;
+    height: 1000px;
+    display: flex;
+	background: linear-gradient(to bottom, #0963ff, #bfdbfe); 
+}
+
+/* LEFT BANNER */
+.banner {
+    width: 50%;
+}
+
+.banner img {
+    width: 50%;
+	height: 10px;
+}
+
+/* RIGHT SIDE */
+.login-box {
+    width: 50%;
+    padding: 40px 50px;
+}
+
+.login-box h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* INPUT */
+.login-box input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: #5a67d8;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* GOOGLE BTN */
+.google-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.google-btn img {
+    width: 25px;
+}
+
+
+
+/* Mobile (below 600px) */
+@media (max-width: 600px) {
+    .login-box h2 {
+        font-size: 22px;
+    }
+
+    .login-box {
+        padding: 25px 20px;
+    }
+
+    .login-btn, .google-btn {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-box input {
+        padding: 12px;
+    }
+
+    .login-box h2 {
+        font-size: 20px;
+    }
+}

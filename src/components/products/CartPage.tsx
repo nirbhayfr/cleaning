@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { incrementQty, decrementQty } from "../../store/cartSlice";
+// import { incrementQty, decrementQty } from "../../store/cartSlice";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -9,8 +9,8 @@ export default function CartPage() {
     const dispatch = useAppDispatch();
 
 
-    const itemTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const tax = 499;
+    const itemTotal = cart.reduce((sum, item) => sum + +item.price.split(" ")[1] * item.quantity, 0);
+    const tax = 0
     const totalAmount = itemTotal + tax;
     return (
         <div className="p-4">
@@ -27,7 +27,7 @@ export default function CartPage() {
                         <div className="flex justify-between items-center">
                             {/* Image */}
                             <img
-                                src={item.image}
+                                src={item.images[0]}
                                 alt={item.title}
                                 className="w-20 h-20 rounded-lg object-cover"
                             />
@@ -36,16 +36,16 @@ export default function CartPage() {
                             <div className="flex items-center gap-2">
                                 <button
                                     className="border rounded-md px-2"
-                                    onClick={() => dispatch(decrementQty(item.id))}
+                                    // onClick={() => dispatch(decrementQty(item.id))}
                                 >
                                     –
                                 </button>
 
-                                <span>{item.qty}</span>
+                                {/* <span>{item.qty}</span> */}
 
                                 <button
                                     className="border rounded-md px-2"
-                                    onClick={() => dispatch(incrementQty(item.id))}
+                                    // onClick={() => dispatch(incrementQty(item.id))}
                                 >
                                     +
                                 </button>
@@ -55,7 +55,7 @@ export default function CartPage() {
                             <p className="font-semibold">₹ {item.price}</p>
                         </div>
 
-                        <p className="text-sm mt-1 text-gray-500">{item.type}</p>
+                        {/* <p className="text-sm mt-1 text-gray-500">{item.title}</p> */}
                     </div>
                 ))}
 
@@ -68,7 +68,7 @@ export default function CartPage() {
                 <p className="flex items-center gap-2">
                     <span>🎟️</span>coupens and offers
                 </p>
-                <p className="text-blue-600">5 offers</p>
+                <p className="text-blue-600">5 offers </p>
             </div>
 
             {/*payment */}
@@ -100,7 +100,7 @@ export default function CartPage() {
             </div>
 
             {/*button */}
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg mt-6">Proceed TO Pay</button>
+            <button className="w-full bg-blue-600 text-white py-3 rounded-lg mt-6">Proceed To Pay</button>
         </div>
 
     )
