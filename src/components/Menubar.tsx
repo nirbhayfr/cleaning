@@ -101,7 +101,7 @@ function Menubar() {
 					className={`menu-item ${
 						pathname === "/profile" ? "active" : ""
 					}`}
-					to="#"
+					to="/login"
 				>
 					<User size={26} />
 					<span>Profile</span>

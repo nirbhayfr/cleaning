@@ -6,7 +6,7 @@ import ProductPage from "./components/products/ProductPage";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import CartPage from "./components/products/CartPage";
-import { Login } from "./components/login/Login";
+import Login from "./components/login/Login";
 
 function App() {
 	return (
@@ -16,13 +16,12 @@ function App() {
 					<Route path="/" element={<AppLayout />}>
 						<Route index element={<Homepage />} />
 						<Route path="/cart" element={<CartPage />} />
-
 					</Route>
 
 					<Route path="/products" element={<ProductLayout />}>
 						<Route index element={<ProductPage />} />
 					</Route>
-					<Route path="/login" element={<Login/>}/>
+					<Route path="/login" element={<Login />} />
 				</Routes>
 			</BrowserRouter>
 		</Provider>
