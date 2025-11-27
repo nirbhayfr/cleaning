@@ -1808,3 +1808,107 @@
 }
 
 /* ---- Cart Page End ---- */
+
+/* ---- Checkout Page Start ---- */
+.checkout-wrapper {
+	padding: 16px;
+}
+
+.checkout-title {
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.checkout-section {
+	background: #f2f2f2;
+	padding: 16px;
+	border-radius: 12px;
+	margin-bottom: 20px;
+}
+
+.section-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+.checkout-form {
+	display: grid;
+	gap: 10px;
+}
+
+.checkout-form input {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+}
+
+.payment-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.pay-option {
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.pay-option.active {
+	border-color: #0077ff;
+	background: #e8f1ff;
+}
+
+.online-pay-grid {
+	margin-top: 16px;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 12px;
+}
+
+.online-pay-card {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	background: white;
+	padding: 12px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.2s;
+	height: 70px;
+}
+
+.online-pay-card img {
+	width: 40px;
+	margin-bottom: 6px;
+}
+
+.online-pay-card.selected {
+	border-color: #0077ff;
+	background: #eaf4ff;
+}
+
+.pay-btn {
+	width: 100%;
+	padding: 14px;
+	background: #0077ff;
+	color: white;
+	font-size: 16px;
+	border: none;
+	border-radius: 10px;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+/* ---- Checkout Page End ---- */

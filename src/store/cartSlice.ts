@@ -12,6 +12,7 @@ export interface CartItem {
 
 export interface CartState {
 	items: CartItem[];
+	finalPrice: number;
 }
 
 // Load cart from localStorage
@@ -26,6 +27,7 @@ const loadFromLocalStorage = (): CartItem[] => {
 
 const initialState: CartState = {
 	items: loadFromLocalStorage(),
+	finalPrice: 0,
 };
 
 const cartSlice = createSlice({
@@ -71,6 +73,13 @@ const cartSlice = createSlice({
 
 			localStorage.setItem("cart", JSON.stringify(state.items));
 		},
+		setFinalPrice: (state, action: PayloadAction<number>) => {
+			state.finalPrice = action.payload;
+			localStorage.setItem(
+				"finalPrice",
+				JSON.stringify(state.finalPrice)
+			);
+		},
 	},
 });
 
@@ -80,6 +89,7 @@ export const {
 	clearCart,
 	increaseQty,
 	decreaseQty,
+	setFinalPrice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

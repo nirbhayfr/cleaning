@@ -3,13 +3,15 @@ import {
 	increaseQty,
 	decreaseQty,
 	removeFromCart,
+	setFinalPrice,
 } from "../../store/cartSlice";
 import { ArrowLeft, BadgePercent, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function CartPage() {
 	const [policyOpen, setPolicyOpen] = useState(false);
+	const navigate = useNavigate();
 	const cart = useAppSelector((state) => state.cart.items);
 
 	const dispatch = useAppDispatch();
@@ -137,7 +139,15 @@ export default function CartPage() {
 				</p>
 			</div>
 
-			<button className="cart-pay-btn">Proceed To Pay</button>
+			<button
+				className="cart-pay-btn"
+				onClick={() => {
+					dispatch(setFinalPrice(totalAmount));
+					navigate("/checkout");
+				}}
+			>
+				Proceed To Pay
+			</button>
 		</div>
 	);
 }
