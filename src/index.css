@@ -1647,3 +1647,164 @@
 }
 
 /* ---- Login Page End ---- */
+
+/* ---- Cart Page Start ---- */
+.cart-wrapper {
+	padding: 16px;
+	max-width: 480px;
+	margin: auto;
+}
+
+.cart-back-btn {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12px;
+	color: black;
+}
+
+.cart-title {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.cart-items {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.cart-item {
+	background: #f3f3f3;
+	padding: 12px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.cart-item-img {
+	width: 70px;
+	height: 70px;
+	border-radius: 10px;
+	object-fit: cover;
+}
+
+.cart-item-info {
+	flex: 1;
+}
+
+.cart-item-title {
+	font-weight: 600;
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+
+.cart-qty {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cart-qty button {
+	border: 1px solid #ccc;
+	padding: 4px 10px;
+	border-radius: 6px;
+	background: white;
+	cursor: pointer;
+}
+
+.cart-price {
+	font-weight: bold;
+	text-align: right;
+}
+
+.cart-right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 8px;
+}
+
+.cart-delete-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: 0.2s;
+}
+
+.cart-delete-btn:hover {
+	opacity: 1;
+}
+
+.cart-offers {
+	margin-top: 20px;
+	background: #f3f3f3;
+	padding: 12px;
+	border-radius: 12px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.cart-offer-icon {
+	display: flex;
+	gap: 10px;
+}
+.cart-offer-icon span {
+	color: var(--color-primary);
+}
+.cart-offer-count {
+	color: var(--color-primary);
+}
+
+.cart-payment {
+	margin-top: 20px;
+}
+
+.cart-payment h3 {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.cart-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.cart-total {
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.cart-policy {
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+.cart-policy h4 {
+	font-weight: bold;
+}
+
+.policy-link {
+	color: #007bff;
+	margin-top: 4px;
+}
+
+.cart-pay-btn {
+	width: 100%;
+	background: #007bff;
+	color: white;
+	padding: 14px;
+	border-radius: 10px;
+	margin-top: 24px;
+	font-size: 16px;
+	cursor: pointer;
+	border: none;
+}
+
+/* ---- Cart Page End ---- */

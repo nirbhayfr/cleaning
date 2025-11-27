@@ -15,13 +15,13 @@ function App() {
 				<Routes>
 					<Route path="/" element={<AppLayout />}>
 						<Route index element={<Homepage />} />
-						<Route path="/cart" element={<CartPage />} />
 					</Route>
 
 					<Route path="/products" element={<ProductLayout />}>
 						<Route index element={<ProductPage />} />
 					</Route>
 					<Route path="/login" element={<Login />} />
+					<Route path="/cart" element={<CartPage />} />
 				</Routes>
 			</BrowserRouter>
 		</Provider>

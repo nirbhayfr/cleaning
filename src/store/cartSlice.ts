@@ -56,19 +56,30 @@ const cartSlice = createSlice({
 			localStorage.setItem("cart", JSON.stringify(state.items));
 		},
 
-		updateQty: (
-			state,
-			action: PayloadAction<{ id: string; qty: number }>
-		) => {
-			const item = state.items.find((i) => i.id === action.payload.id);
-			if (item) item.quantity = action.payload.qty;
+		increaseQty: (state, action: PayloadAction<string>) => {
+			const item = state.items.find((i) => i.id === action.payload);
+			if (item) item.quantity += 1;
+
+			localStorage.setItem("cart", JSON.stringify(state.items));
+		},
+
+		decreaseQty: (state, action: PayloadAction<string>) => {
+			const item = state.items.find((i) => i.id === action.payload);
+			if (item && item.quantity > 1) {
+				item.quantity -= 1;
+			}
 
 			localStorage.setItem("cart", JSON.stringify(state.items));
 		},
 	},
 });
 
-export const { addToCart, removeFromCart, clearCart, updateQty } =
-	cartSlice.actions;
+export const {
+	addToCart,
+	removeFromCart,
+	clearCart,
+	increaseQty,
+	decreaseQty,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
