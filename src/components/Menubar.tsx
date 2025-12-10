@@ -78,22 +78,25 @@ function Menubar() {
 					}`}
 					to="/"
 				>
-					<Home size={22} />
+					<Home size={22} className="menu-item-icon" />
 					<span>Home</span>
 				</Link>
 
 				<Link className="menu-item" to="#">
-					<Phone size={22} />
+					<Phone size={22} className="menu-item-icon" />
 					<span>Phone</span>
 				</Link>
 
 				<Link className="menu-item" to="#">
-					<Tag size={26} />
+					<Tag size={22} className="menu-item-icon" />
 					<span>Top Deals</span>
 				</Link>
 
 				<Link className="menu-item" to="#">
-					<MessageCircleMore size={22} />
+					<MessageCircleMore
+						size={22}
+						className="menu-item-icon"
+					/>
 					<span>Message</span>
 				</Link>
 
@@ -103,7 +106,7 @@ function Menubar() {
 					}`}
 					to="/login"
 				>
-					<User size={26} />
+					<User size={22} className="menu-item-icon" />
 					<span>Profile</span>
 				</Link>
 			</nav>

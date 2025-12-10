@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { topCategories } from "../../../data/data";
+
+import {
+	useFetchAllCategories,
+	useFetchSubCategories,
+} from "../../hooks/useCategories";
 
 export default function LookingFor() {
 	const [activePopup, setActivePopup] = useState<string | null>(null);
+	const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
+	const { data: categories = [], isLoading } = useFetchAllCategories();
+	if (isLoading) return <p>Loading categories...</p>;
+	if (!categories.length) return <p>No categories found.</p>;
+
+	const activeCategories = categories.filter((cat) => cat.isActive);
 
 	const comingSoon = [
 		{ title: "Female Home Salon", img: "/img/hair-salon.jpeg" },
@@ -20,13 +30,19 @@ export default function LookingFor() {
 				<h2 className="looking-title">What are you looking for?</h2>
 
 				<div className="looking-grid">
-					{topCategories.map((cat) => (
+					{activeCategories.map((cat) => (
 						<div
 							className="looking-card"
-							onClick={() => setActivePopup(cat.key)}
+							onClick={() => {
+								setActivePopup(cat.key);
+								setOpenCategoryId(cat._id);
+							}}
 							key={cat.key}
 						>
-							<img src={cat.img} alt={cat.title} />
+							<img
+								src={cat.image?.trim() || undefined}
+								alt={cat.title}
+							/>
 							<p>{cat.title}</p>
 						</div>
 					))}
@@ -35,48 +51,11 @@ export default function LookingFor() {
 
 			{/* POPUP for Selected Category */}
 			{activePopup && (
-				<>
-					<div className={`lf-bottom-popup open`}>
-						<button
-							className="lf-popup-close-btn"
-							onClick={() => setActivePopup(null)}
-						>
-							✕
-						</button>
-
-						<h3>Categories</h3>
-
-						<div className="lf-popup-grid">
-							{topCategories
-								.find((c) => c.key === activePopup)
-								?.cards.map((card, i) => (
-									<Link to="/products" key={i}>
-										<div className="lf-popup-card">
-											<div className="lf-popup-text">
-												<h4>
-													{card.title}
-												</h4>
-											</div>
-
-											<div className="lf-popup-image-box">
-												<img
-													src={card.img}
-													alt={
-														card.title
-													}
-												/>
-											</div>
-										</div>
-									</Link>
-								))}
-						</div>
-					</div>
-
-					<div
-						className="lf-popup-backdrop"
-						onClick={() => setActivePopup(null)}
-					></div>
-				</>
+				<SubCategoryCard
+					setActivePopup={setActivePopup}
+					activePopup={activePopup}
+					categoryId={openCategoryId}
+				/>
 			)}
 
 			<section className="looking-section">
@@ -95,6 +74,68 @@ export default function LookingFor() {
 					))}
 				</div>
 			</section>
+		</>
+	);
+}
+
+function SubCategoryCard({
+	setActivePopup,
+	activePopup,
+	categoryId,
+}: {
+	setActivePopup: (val: string | null) => void;
+	activePopup: string | null;
+	categoryId: string | null;
+}) {
+	const { data: subs = [], isLoading } = useFetchSubCategories(categoryId!);
+	const activeSubCategories = subs.filter((cat) => cat.isActive);
+
+	if (!activePopup) return null;
+	return (
+		<>
+			<div className="lf-bottom-popup open">
+				<button
+					className="lf-popup-close-btn"
+					onClick={() => setActivePopup(null)}
+				>
+					✕
+				</button>
+
+				<h3>Categories</h3>
+
+				<div className="lf-popup-grid">
+					{isLoading && <p>Loading...</p>}
+					{activeSubCategories.length > 0 ? (
+						activeSubCategories.map((card, i) => (
+							<Link to="/products" key={i}>
+								<div className="lf-popup-card">
+									<div className="lf-popup-text">
+										<h4>{card.title}</h4>
+									</div>
+
+									<div className="lf-popup-image-box">
+										<img
+											src={
+												card.image?.trim() ||
+												undefined
+											}
+											alt={card.title}
+										/>
+									</div>
+								</div>
+							</Link>
+						))
+					) : (
+						<p>No subcategories found.</p>
+					)}
+				</div>
+			</div>
+
+			{/* Backdrop */}
+			<div
+				className="lf-popup-backdrop"
+				onClick={() => setActivePopup(null)}
+			></div>
 		</>
 	);
 }
