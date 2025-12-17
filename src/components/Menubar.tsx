@@ -1,13 +1,29 @@
 import { Home, MessageCircleMore, Phone, Tag, User, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { topCategories } from "../../data/data";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { useFetchAllCategories } from "../hooks/useCategories";
 
 function Menubar() {
 	const [hideMenu, setHideMenu] = useState(false);
 	const [popupOpen, setPopupOpen] = useState(false);
 	const location = useLocation();
 	const pathname = location.pathname;
+
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const category = searchParams.get("category");
+	const { data: categories = [] } = useFetchAllCategories();
+
+	const categoryData = categories.find((c) => c.key === category);
+
+	const handleClick = (subCategory: string) => {
+		setSearchParams((prev) => {
+			const params = new URLSearchParams(prev);
+			params.set("sub-category", subCategory);
+
+			return params;
+		});
+	};
 
 	useEffect(() => {
 		let lastScrollY = window.scrollY;
@@ -56,15 +72,23 @@ function Menubar() {
 						</button>
 
 						<div className="popup-grid">
-							{topCategories[0].cards.map((card) => (
-								<div
-									className="popup-card"
-									key={card.title}
-								>
-									<img src={card.img} alt="" />
-									<p>{card.title}</p>
-								</div>
-							))}
+							{categoryData?.subCategory
+								.filter((c) => c.isActive)
+								.map((card) => (
+									<div
+										className="popup-card"
+										key={card.title}
+										onClick={() =>
+											handleClick(card.key)
+										}
+									>
+										<img
+											src={card.image}
+											alt=""
+										/>
+										<p>{card.title}</p>
+									</div>
+								))}
 						</div>
 					</div>
 				</div>

@@ -1,3 +1,4 @@
+import type { SubCategory } from "../../api/category";
 import { addToCart } from "../../store/cartSlice";
 import { useAppDispatch } from "../../store/hooks";
 import CategorySlider from "./layout/CategorySlider";
@@ -18,6 +19,7 @@ interface Data {
 	title: string;
 	rating: number;
 	bookings: string;
+	subCategories: SubCategory[];
 	services: Service[];
 }
 
@@ -26,6 +28,7 @@ export default function ProductCategory({
 	rating,
 	bookings,
 	services,
+	subCategories,
 }: Data) {
 	const dispatch = useAppDispatch();
 	return (
@@ -33,57 +36,63 @@ export default function ProductCategory({
 			<ProductsFilters />
 
 			<section className="product-section">
-				<CategorySlider />
+				<CategorySlider subCategories={subCategories} />
 
 				<h1 className="product-title">{title}</h1>
 				<p className="product-sub">
-					⭐ {rating} <span>({bookings}+ bookings)</span>
+					⭐ {rating} <span>({bookings} bookings)</span>
 				</p>
 
 				{/* Cards */}
 				<div className="product-grid">
-					{services.map((service, index) => (
-						<div className="product-card" key={index}>
-							<div className="product-info">
-								<h3>{service.title}</h3>
+					{services.length === 0 ? (
+						<p>No Products Found</p>
+					) : (
+						services.map((service, index) => (
+							<div className="product-card-2" key={index}>
+								<div className="product-info">
+									<h3>{service.title}</h3>
 
-								{/* <p className="product-rating">
+									{/* <p className="product-rating">
 								⭐ {service.serviceRating}
 								<span>({service.bookings})</span>
 								</p> */}
 
-								<div className="product-price">
-									<span className="old-price">
-										₹{service.price}
-									</span>
-									<span className="new-price">
-										₹{service.discountPrice}
-									</span>
+									<div className="product-price">
+										<span className="old-price">
+											₹{service.price}
+										</span>
+										<span className="new-price">
+											₹{service.discountPrice}
+										</span>
+									</div>
+									<p>{service.description}</p>
 								</div>
-								<p>{service.description}</p>
-							</div>
 
-							<div className="product-img-box">
-								<img
-									src={service.images[0]}
-									alt={service.title}
-								/>
+								<div className="product-img-box">
+									<img
+										src={service.images[0]}
+										alt={service.title}
+									/>
 
-								<button
-									className="add-btn"
-									onClick={() =>
-										dispatch(addToCart(service))
-									}
-								>
-									ADD
+									<button
+										className="add-btn"
+										onClick={() =>
+											dispatch(
+												addToCart(service)
+											)
+										}
+									>
+										ADD
+									</button>
+								</div>
+
+								<button className="details-btn">
+									View Details
 								</button>
 							</div>
-
-							<button className="details-btn">
-								View Details
-							</button>
-						</div>
-					))}
+						))
+					)}
 				</div>
 			</section>
 		</>

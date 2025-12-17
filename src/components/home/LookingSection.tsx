@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
 	useFetchAllCategories,
@@ -87,10 +87,21 @@ function SubCategoryCard({
 	activePopup: string | null;
 	categoryId: string | null;
 }) {
+	const navigate = useNavigate();
+
 	const { data: subs = [], isLoading } = useFetchSubCategories(categoryId!);
 	const activeSubCategories = subs.filter((cat) => cat.isActive);
 
 	if (!activePopup) return null;
+
+	const handleClick = (subCatKey: string) => {
+		const params = new URLSearchParams({
+			category: activePopup,
+			"sub-category": subCatKey,
+		});
+
+		navigate(`/products?${params.toString()}`);
+	};
 	return (
 		<>
 			<div className="lf-bottom-popup open">
@@ -107,7 +118,10 @@ function SubCategoryCard({
 					{isLoading && <p>Loading...</p>}
 					{activeSubCategories.length > 0 ? (
 						activeSubCategories.map((card, i) => (
-							<Link to="/products" key={i}>
+							<div
+								key={i}
+								onClick={() => handleClick(card.key)}
+							>
 								<div className="lf-popup-card">
 									<div className="lf-popup-text">
 										<h4>{card.title}</h4>
@@ -123,7 +137,7 @@ function SubCategoryCard({
 										/>
 									</div>
 								</div>
-							</Link>
+							</div>
 						))
 					) : (
 						<p>No subcategories found.</p>

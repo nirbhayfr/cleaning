@@ -20,14 +20,17 @@ export type SubCategory = {
 	category: string;
 };
 
-export type Category = {
+export interface Category {
 	_id: string;
-	title: string;
 	key: string;
-	image?: string;
+	title: string;
+	image: string;
 	isActive: boolean;
-	subcategories?: SubCategory[];
-};
+	subCategory: SubCategory[];
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+}
 
 export type ApiResponse = {
 	status: number;
