@@ -13,6 +13,9 @@ interface Service {
 	discountPrice: string;
 	images: string[];
 	quantity: number;
+	_id: string;
+	inStock: boolean;
+	onSale: boolean;
 }
 
 interface Data {
