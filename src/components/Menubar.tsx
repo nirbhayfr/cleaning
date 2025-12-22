@@ -126,12 +126,14 @@ function Menubar() {
 
 				<Link
 					className={`menu-item ${
-						pathname === "/profile" ? "active" : ""
+						pathname === "/profile" || pathname === "/login"
+							? "active"
+							: ""
 					}`}
 					to="/login"
 				>
 					<User size={22} className="menu-item-icon" />
-					<span>Profile</span>
+					<span>Login</span>
 				</Link>
 			</nav>
 		</>

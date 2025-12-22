@@ -33,6 +33,9 @@ export default function AdminLayout() {
 					<NavLink to="/admin/products" className="sidebar-link">
 						Products
 					</NavLink>
+					<NavLink to="/admin/orders" className="sidebar-link">
+						Orders
+					</NavLink>
 				</nav>
 			</aside>
 

@@ -39,7 +39,7 @@ export default function CartPage() {
 
 			<div className="cart-items">
 				{cart.map((item) => (
-					<div key={item.id} className="cart-item">
+					<div key={item._id} className="cart-item">
 						<img
 							src={item.images[0]}
 							alt={item.title}
@@ -54,7 +54,9 @@ export default function CartPage() {
 							<div className="cart-qty">
 								<button
 									onClick={() =>
-										dispatch(decreaseQty(item.id))
+										dispatch(
+											decreaseQty(item._id)
+										)
 									}
 								>
 									–
@@ -64,7 +66,9 @@ export default function CartPage() {
 
 								<button
 									onClick={() =>
-										dispatch(increaseQty(item.id))
+										dispatch(
+											increaseQty(item._id)
+										)
 									}
 								>
 									+
@@ -80,7 +84,7 @@ export default function CartPage() {
 							<button
 								className="cart-delete-btn"
 								onClick={() =>
-									dispatch(removeFromCart(item.id))
+									dispatch(removeFromCart(item._id))
 								}
 							>
 								<Trash2 size={18} />
@@ -141,6 +145,7 @@ export default function CartPage() {
 
 			<button
 				className="cart-pay-btn"
+				disabled={totalAmount === 0}
 				onClick={() => {
 					dispatch(setFinalPrice(totalAmount));
 					navigate("/checkout");

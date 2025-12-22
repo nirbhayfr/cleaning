@@ -1,43 +1,159 @@
 import { useState } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+import { decryptData } from "../../encryption/crypto";
+import { useCreateOrder } from "../../hooks/useorders";
+import type { User } from "../../api/auth";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../store/cartSlice";
 
 export default function CheckoutPage() {
-	const finalPrice = useAppSelector((state) => state.cart.finalPrice);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const user = decryptData(localStorage.getItem("user")!) as User;
+	const cart = useAppSelector((state) => state.cart.items);
+	const createOrder = useCreateOrder();
+
 	const [paymentMode, setPaymentMode] = useState<"cod" | "online">("cod");
 	const [selectedOnlineOption, setSelectedOnlineOption] = useState("");
+
+	const [shipping, setShipping] = useState({
+		fullName: "",
+		phone: "",
+		house: "",
+		street: "",
+		city: "",
+		state: "",
+		pincode: "",
+		date: "",
+		time: "",
+	});
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setShipping((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const isShippingValid = Object.values(shipping).every(
+		(value) => value.trim() !== ""
+	);
+
+	const isPaymentValid =
+		paymentMode === "cod" ||
+		(paymentMode === "online" && selectedOnlineOption);
+
+	const canPay = isShippingValid && isPaymentValid;
+
+	const handlePay = () => {
+		if (!canPay) {
+			return toast.warning("Fill all the details.");
+		}
+		const payload = {
+			customerId: user._id,
+			shippingAddress: {
+				fullName: shipping.fullName,
+				phone: shipping.phone,
+				addressLine: `${shipping.house}, ${shipping.street}`,
+				city: shipping.city,
+				state: shipping.state,
+				postalCode: shipping.pincode,
+				date: shipping.date,
+				time: shipping.time,
+			},
+			products: cart.map((item) => ({
+				product: item._id, // MongoDB ObjectId
+				quantity: item.quantity,
+				price: Number(item.price.replace(/[^\d]/g, "")),
+			})),
+		};
+
+		createOrder.mutate(payload, {
+			onSuccess: () => {
+				toast.success("Order Placed Succesfully");
+				dispatch(clearCart());
+				navigate("/");
+			},
+			onError: () => {
+				toast.error("There was an error in placing the order.");
+			},
+		});
+	};
 
 	return (
 		<div className="checkout-wrapper">
 			<Link to="/cart" className="cart-back-btn">
 				<ArrowLeft />
 			</Link>
+
 			<h2 className="checkout-title">Checkout</h2>
 
-			{/* SHIPPING DETAILS FORM */}
+			{/* SHIPPING DETAILS */}
 			<div className="checkout-section">
 				<h3 className="section-title">Shipping Details</h3>
 
 				<form className="checkout-form">
-					<input type="text" placeholder="Full Name" required />
 					<input
-						type="text"
+						name="fullName"
+						value={shipping.fullName}
+						onChange={handleChange}
+						placeholder="Full Name"
+					/>
+					<input
+						name="phone"
+						value={shipping.phone}
+						onChange={handleChange}
 						placeholder="Phone Number"
-						required
 					/>
-					<input type="text" placeholder="House No." required />
 					<input
-						type="text"
-						placeholder="Street / Area"
-						required
+						name="house"
+						value={shipping.house}
+						onChange={handleChange}
+						placeholder="House No."
 					/>
-					<input type="text" placeholder="City" required />
-					<input type="text" placeholder="Pincode" required />
+					<input
+						name="street"
+						value={shipping.street}
+						onChange={handleChange}
+						placeholder="Street / Area"
+					/>
+					<input
+						name="city"
+						value={shipping.city}
+						onChange={handleChange}
+						placeholder="City"
+					/>
+					<input
+						name="state"
+						value={shipping.state}
+						onChange={handleChange}
+						placeholder="City"
+					/>
+					<input
+						name="pincode"
+						value={shipping.pincode}
+						onChange={handleChange}
+						placeholder="Pincode"
+					/>
+
+					<input
+						type="date"
+						name="date"
+						value={shipping.date}
+						onChange={handleChange}
+					/>
+					<input
+						type="time"
+						name="time"
+						value={shipping.time}
+						onChange={handleChange}
+					/>
 				</form>
 			</div>
 
-			{/* PAYMENT OPTIONS */}
+			{/* PAYMENT METHOD */}
 			<div className="checkout-section">
 				<h3 className="section-title">Payment Method</h3>
 
@@ -71,70 +187,46 @@ export default function CheckoutPage() {
 					</label>
 				</div>
 
-				{/* ONLINE PAYMENT OPTIONS */}
 				{paymentMode === "online" && (
 					<div className="online-pay-grid">
-						<div
-							className={`online-pay-card ${
-								selectedOnlineOption === "phonepe"
-									? "selected"
-									: ""
-							}`}
-							onClick={() =>
-								setSelectedOnlineOption("phonepe")
-							}
-						>
-							<img src="/img/phonepe.png" alt="PhonePe" />
-							<p>UPI — PhonePe</p>
-						</div>
-
-						<div
-							className={`online-pay-card ${
-								selectedOnlineOption === "gpay"
-									? "selected"
-									: ""
-							}`}
-							onClick={() =>
-								setSelectedOnlineOption("gpay")
-							}
-						>
-							<img src="/img/gpay.png" alt="Google Pay" />
-							<p>UPI — Google Pay</p>
-						</div>
-
-						<div
-							className={`online-pay-card ${
-								selectedOnlineOption === "debit"
-									? "selected"
-									: ""
-							}`}
-							onClick={() =>
-								setSelectedOnlineOption("debit")
-							}
-						>
-							<img src="/img/card.png" alt="Debit Card" />
-							<p>Debit Card</p>
-						</div>
-
-						<div
-							className={`online-pay-card ${
-								selectedOnlineOption === "credit"
-									? "selected"
-									: ""
-							}`}
-							onClick={() =>
-								setSelectedOnlineOption("credit")
-							}
-						>
-							<img src="/img/card.png" alt="Credit Card" />
-							<p>Credit Card</p>
-						</div>
+						{["phonepe", "gpay", "debit", "credit"].map(
+							(option) => (
+								<div
+									key={option}
+									className={`online-pay-card ${
+										selectedOnlineOption ===
+										option
+											? "selected"
+											: ""
+									}`}
+									onClick={() =>
+										setSelectedOnlineOption(
+											option
+										)
+									}
+								>
+									<img
+										src={
+											option === "phonepe"
+												? "/img/phonepe.png"
+												: option === "gpay"
+												? "/img/gpay.png"
+												: "/img/card.png"
+										}
+										alt={option}
+									/>
+									<p>{option.toUpperCase()}</p>
+								</div>
+							)
+						)}
 					</div>
 				)}
 			</div>
 
-			{/* PAY NOW */}
-			<button className="pay-btn">Pay ₹{finalPrice}</button>
+			{/* PAY BUTTON */}
+			<button className="pay-btn" onClick={handlePay}>
+				Pay
+			</button>
 		</div>
 	);
 }

@@ -44,7 +44,7 @@ export const createCategory = async (payload: CategoryPayload) => {
 	const res = await http.post("/category/create-category", payload);
 	console.log(res.data);
 	return res.data;
-};
+}; 
 
 export const createSubCategory = async (payload: SubCategoryPayload) => {
 	const res = await http.post("/category/create-subCategory", payload);
