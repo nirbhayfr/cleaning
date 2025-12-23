@@ -19,6 +19,8 @@ import AdminOrdersPage from "./components/admin/AdminOrdersPage";
 import MyOrders from "./components/orders/MyOrders";
 import OrdersLayout from "./components/orders/OrderLayout";
 import OrdersPage from "./components/orders/OrderPage";
+import ProtectedRoute from "./ProtectedRoutes";
+import ProfilePage from "./components/profile/ProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -29,12 +31,33 @@ function App() {
 				<Toaster position="bottom-right" richColors />
 				<BrowserRouter>
 					<Routes>
-						<Route path="/cart" element={<CartPage />} />
 						<Route path="/login" element={<Login />} />
 						<Route
 							path="/register"
 							element={<RegisterPage />}
 						/>
+
+						<Route
+							element={
+								<ProtectedRoute
+									allowedRoles={[
+										"CUSTOMER",
+										"VENDOR",
+										"ADMIN",
+									]}
+								/>
+							}
+						>
+							<Route path="/cart" element={<CartPage />} />
+							<Route
+								path="/profile"
+								element={<ProfilePage />}
+							/>
+							<Route
+								path="/checkout"
+								element={<CheckoutPage />}
+							/>
+						</Route>
 
 						<Route path="/" element={<AppLayout />}>
 							<Route index element={<Homepage />} />
@@ -48,44 +71,57 @@ function App() {
 						</Route>
 
 						<Route
-							path="/checkout"
-							element={<CheckoutPage />}
-						/>
-
-						<Route path="/admin" element={<AdminLayout />}>
-							<Route
-								index
-								element={
-									<Navigate
-										to="/admin/home"
-										replace
-									/>
-								}
-							/>
-							<Route
-								path="home"
-								element={<AdminHomepage />}
-							/>
-							<Route
-								path="category"
-								element={<AdminCategoryPage />}
-							/>
-							<Route
-								path="products"
-								element={<AdminProductPage />}
-							/>
-							<Route
-								path="orders"
-								element={<AdminOrdersPage />}
-							/>
+							path="/admin"
+							element={
+								<ProtectedRoute
+									allowedRoles={["ADMIN"]}
+								/>
+							}
+						>
+							<Route element={<AdminLayout />}>
+								<Route
+									index
+									element={
+										<Navigate
+											to="/admin/home"
+											replace
+										/>
+									}
+								/>
+								<Route
+									path="home"
+									element={<AdminHomepage />}
+								/>
+								<Route
+									path="category"
+									element={<AdminCategoryPage />}
+								/>
+								<Route
+									path="products"
+									element={<AdminProductPage />}
+								/>
+								<Route
+									path="orders"
+									element={<AdminOrdersPage />}
+								/>
+							</Route>
 						</Route>
 
-						<Route path="/orders" element={<OrdersLayout />}>
-							<Route index element={<OrdersPage />} />
-							<Route
-								path="myorders"
-								element={<MyOrders />}
-							/>
+						<Route
+							path="/orders"
+							element={
+								<ProtectedRoute
+									allowedRoles={["VENDOR", "ADMIN"]}
+								/>
+							}
+						>
+							<Route element={<OrdersLayout />}>
+								<Route index element={<OrdersPage />} />
+								<Route
+									path="myorders"
+									element={<MyOrders />}
+								/>
+							</Route>
 						</Route>
 					</Routes>
 				</BrowserRouter>

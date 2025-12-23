@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "sonner";
 
 export interface CartItem {
 	_id: string;
@@ -48,6 +49,7 @@ const cartSlice = createSlice({
 			}
 
 			localStorage.setItem("cart", JSON.stringify(state.items));
+			toast.success("Added to Cart");
 		},
 
 		removeFromCart: (state, action: PayloadAction<string>) => {
@@ -55,6 +57,7 @@ const cartSlice = createSlice({
 				(i) => i._id !== action.payload
 			);
 			localStorage.setItem("cart", JSON.stringify(state.items));
+			toast.success("Removed from cart");
 		},
 
 		clearCart: (state) => {

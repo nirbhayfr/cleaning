@@ -66,7 +66,7 @@ export const fetchAllOrders = async () => {
 
 export const fetchUserAllOrders = async (userId: string) => {
 	const res = await http.get(`/order/fetch-orders/${userId}`);
-	return res.data;
+	return res.data.data;
 };
 
 export const fetchWorkerOrders = async (workerId: string) => {
