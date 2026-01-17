@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { decryptData } from "../../encryption/crypto";
 import type { User } from "../../api/auth";
@@ -12,7 +12,7 @@ export default function ProfilePage() {
 	const user: User | null = stored ? (decryptData(stored) as User) : null;
 
 	const { data: orders, isLoading } = useFetchUserOrders(
-		user?._id as string
+		user?._id as string,
 	);
 
 	const handleLogout = () => {
@@ -54,6 +54,25 @@ export default function ProfilePage() {
 					</strong>
 				</div>
 
+				{user.role === "ADMIN" && (
+					<div className="profile-row gap-4 text-center">
+						<Link to="/orders" className="extra-btn">
+							Check Orders
+						</Link>
+						<Link to="/admin" className="extra-btn">
+							Admin Panel
+						</Link>
+					</div>
+				)}
+
+				{user.role === "VENDOR" && (
+					<div className="profile-row text-center">
+						<Link to="/orders" className="extra-btn">
+							Check Orders
+						</Link>
+					</div>
+				)}
+
 				<button className="logout-btn" onClick={handleLogout}>
 					Logout
 				</button>
@@ -84,15 +103,15 @@ export default function ProfilePage() {
 									order.isCompleted
 										? "completed"
 										: order.isTaken
-										? "taken"
-										: "pending"
+											? "taken"
+											: "pending"
 								}`}
 							>
 								{order.isCompleted
 									? "Completed"
 									: order.isTaken
-									? "In Progress"
-									: "Pending"}
+										? "In Progress"
+										: "Pending"}
 							</span>
 						</div>
 					))}

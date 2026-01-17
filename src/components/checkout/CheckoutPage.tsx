@@ -38,7 +38,7 @@ export default function CheckoutPage() {
 	};
 
 	const isShippingValid = Object.values(shipping).every(
-		(value) => value.trim() !== ""
+		(value) => value.trim() !== "",
 	);
 
 	const isPaymentValid =
@@ -69,6 +69,8 @@ export default function CheckoutPage() {
 				price: Number(item.price.replace(/[^\d]/g, "")),
 			})),
 		};
+
+		console.log(payload);
 
 		createOrder.mutate(payload, {
 			onSuccess: () => {
@@ -201,7 +203,7 @@ export default function CheckoutPage() {
 									}`}
 									onClick={() =>
 										setSelectedOnlineOption(
-											option
+											option,
 										)
 									}
 								>
@@ -210,14 +212,14 @@ export default function CheckoutPage() {
 											option === "phonepe"
 												? "/img/phonepe.png"
 												: option === "gpay"
-												? "/img/gpay.png"
-												: "/img/card.png"
+													? "/img/gpay.png"
+													: "/img/card.png"
 										}
 										alt={option}
 									/>
 									<p>{option.toUpperCase()}</p>
 								</div>
-							)
+							),
 						)}
 					</div>
 				)}

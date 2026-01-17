@@ -15,7 +15,7 @@ export default function ProductManagement() {
 	const [loadingId, setLoadingId] = useState<string | null>(null);
 	const [showCreateForm, setShowCreateForm] = useState(false);
 	const [editProduct, setEditProduct] = useState<Partial<Product> | null>(
-		null
+		null,
 	);
 	const [formData, setFormData] = useState<Partial<Product>>({
 		title: "",
@@ -42,7 +42,7 @@ export default function ProductManagement() {
 	const handleChange = (
 		e: React.ChangeEvent<
 			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-		>
+		>,
 	) => {
 		const target = e.target as HTMLInputElement;
 		const { name, value, type, checked } = target;

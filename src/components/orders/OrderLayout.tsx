@@ -1,6 +1,7 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function OrdersLayout() {
+	const location = useLocation();
 	return (
 		<div className="orders-page">
 			{/* Header */}
@@ -12,9 +13,14 @@ export default function OrdersLayout() {
 					</p>
 				</div>
 
-				<Link to="/orders/myorders" className="orders-primary-btn">
-					My Orders
-				</Link>
+				{location.pathname !== "/orders/myorders" && (
+					<Link
+						to="/orders/myorders"
+						className="orders-primary-btn"
+					>
+						My Orders
+					</Link>
+				)}
 			</div>
 
 			{/* Filters */}
@@ -24,20 +30,6 @@ export default function OrdersLayout() {
 					placeholder="Search by order ID or customer"
 					className="orders-search"
 				/>
-
-				<select className="orders-select">
-					<option>Status</option>
-					<option>Pending</option>
-					<option>Completed</option>
-					<option>Cancelled</option>
-				</select>
-
-				<select className="orders-select">
-					<option>Date</option>
-					<option>Today</option>
-					<option>This Week</option>
-					<option>This Month</option>
-				</select>
 			</div>
 
 			{/* Content */}
