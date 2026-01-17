@@ -140,18 +140,25 @@ export default function CheckoutPage() {
 						placeholder="Pincode"
 					/>
 
-					<input
-						type="date"
-						name="date"
-						value={shipping.date}
-						onChange={handleChange}
-					/>
-					<input
-						type="time"
-						name="time"
-						value={shipping.time}
-						onChange={handleChange}
-					/>
+					<div className="input-wrapper">
+						{!shipping.date && <label>Select date</label>}
+						<input
+							type="date"
+							name="date"
+							value={shipping.date}
+							onChange={handleChange}
+						/>
+					</div>
+
+					<div className="input-wrapper">
+						{!shipping.time && <label>Select time</label>}
+						<input
+							type="time"
+							name="time"
+							value={shipping.time}
+							onChange={handleChange}
+						/>
+					</div>
 				</form>
 			</div>
 
