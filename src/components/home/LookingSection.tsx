@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 import {
   useFetchAllCategories,
@@ -10,7 +11,18 @@ export default function LookingFor() {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
   const { data: categories = [], isLoading } = useFetchAllCategories();
-  if (isLoading) return <p>Loading categories...</p>;
+  if (isLoading) {
+    return (
+      <section className="looking-section">
+        <h2 className="looking-title">What are you looking for?</h2>
+
+        <div className="lf-loader">
+          <span className="spinner"></span>
+          <p>Loading categories...</p>
+        </div>
+      </section>
+    );
+  }
   if (!categories.length) return <p>No categories found.</p>;
 
   const activeCategories = categories.filter((cat) => cat.isActive);
@@ -31,8 +43,11 @@ export default function LookingFor() {
 
         <div className="looking-grid">
           {activeCategories.map((cat) => (
-            <div
+            <motion.div
               className="looking-card"
+              whileHover={{ y: -8, scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 300 }}
               onClick={() => {
                 setActivePopup(cat.key);
                 setOpenCategoryId(cat._id);
@@ -49,24 +64,32 @@ export default function LookingFor() {
               />
 
               <p>{cat.title}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* POPUP for Selected Category */}
-      {activePopup && (
-        <SubCategoryCard
-          setActivePopup={setActivePopup}
-          activePopup={activePopup}
-          categoryId={openCategoryId}
-        />
-      )}
+      <AnimatePresence>
+        {activePopup && (
+          <SubCategoryCard
+            setActivePopup={setActivePopup}
+            activePopup={activePopup}
+            categoryId={openCategoryId}
+          />
+        )}
+      </AnimatePresence>
 
       <section className="looking-section">
         <h2 className="looking-title">Coming Soon</h2>
 
-        <div className="looking-grid">
+        <motion.div
+          className="looking-grid"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           {comingSoon.map((item, index) => (
             <div className="looking-card faded" key={index}>
               <span className="coming-tag">Coming Soon</span>
@@ -75,7 +98,7 @@ export default function LookingFor() {
               <p>{item.title}</p>
             </div>
           ))}
-        </div>
+        </motion.div>
       </section>
     </>
   );
@@ -107,7 +130,13 @@ function SubCategoryCard({
   };
   return (
     <>
-      <div className="lf-bottom-popup open">
+      <motion.div
+        className="lf-bottom-popup open"
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         <button
           className="lf-popup-close-btn"
           onClick={() => setActivePopup(null)}
@@ -118,8 +147,15 @@ function SubCategoryCard({
         <h3>Categories</h3>
 
         <div className="lf-popup-grid">
-          {isLoading && <p>Loading...</p>}
-          {activeSubCategories.length > 0 ? (
+          {isLoading && (
+            <div className="lf-loader">
+              <span className="spinner"></span>
+              <p>Loading services...</p>
+            </div>
+          )}
+
+          {!isLoading &&
+            activeSubCategories.length > 0 &&
             activeSubCategories.map((card, i) => (
               <div key={i} onClick={() => handleClick(card.key)}>
                 <div className="lf-popup-card">
@@ -139,18 +175,22 @@ function SubCategoryCard({
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <p>No subcategories found.</p>
+            ))}
+
+          {!isLoading && activeSubCategories.length === 0 && (
+            <p className="lf-empty">No services available in this category.</p>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Backdrop */}
-      <div
+      <motion.div
         className="lf-popup-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         onClick={() => setActivePopup(null)}
-      ></div>
+      ></motion.div>
     </>
   );
 }

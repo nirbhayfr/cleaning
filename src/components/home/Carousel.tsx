@@ -1,50 +1,84 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const images = [
-	"/img/main-banner-2.jpg",
-	"/img/main-banner-1.jpg",
-	"/img/main-banner-3.jpg",
+const slides = [
+  {
+    img: "/img/main-banner-2.jpg",
+    title: "Professional Home Cleaning",
+    subtitle: "Trusted • Affordable • On-Time Service",
+  },
+  {
+    img: "/img/main-banner-1.jpg",
+    title: "Deep Cleaning Experts",
+    subtitle: "Make your home shine again",
+  },
+  {
+    img: "/img/main-banner-3.jpg",
+    title: "Hassle-Free Booking",
+    subtitle: "Book services in just one click",
+  },
 ];
 
 export default function ImageCarousel() {
-	const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(0);
 
-	useEffect(() => {
-		// Duration logic
-		const duration = current === 0 ? 8000 : 4000; // 8s for first slide, 4s for others
+  useEffect(() => {
+    const duration = current === 0 ? 8000 : 4000;
+    const timer = setTimeout(
+      () => setCurrent((prev) => (prev + 1) % slides.length),
+      duration,
+    );
+    return () => clearTimeout(timer);
+  }, [current]);
 
-		const timer = setTimeout(() => {
-			setCurrent((prev) => (prev + 1) % images.length);
-		}, duration);
+  return (
+    <div className="carousel-wrapper small">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          className="carousel-slide"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.03 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{ backgroundImage: `url(${slides[current].img})` }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          onDragEnd={(_, info) => {
+            if (info.offset.x < -80) setCurrent((current + 1) % slides.length);
+            if (info.offset.x > 80)
+              setCurrent((current - 1 + slides.length) % slides.length);
+          }}
+        >
+          <div className="carousel-overlay compact">
+            <motion.h1
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              {slides[current].title}
+            </motion.h1>
 
-		return () => clearTimeout(timer);
-	}, [current]);
+            <motion.p
+              initial={{ y: 15, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
+              {slides[current].subtitle}
+            </motion.p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
-	return (
-		<div className="video-carousel-wrapper">
-			<img
-				src={images[current]}
-				alt="carousel"
-				className="video-carousel-video"
-			/>
-
-			<div className="video-carousel-dots">
-				{images.map((_, index) => (
-					<div
-						key={index}
-						className={`dot ${
-							current === index ? "active" : ""
-						}`}
-						onClick={() => setCurrent(index)}
-						style={
-							{
-								"--fill-time":
-									index === 0 ? "8s" : "4s",
-							} as React.CSSProperties
-						}
-					></div>
-				))}
-			</div>
-		</div>
-	);
+      <div className="carousel-dots">
+        {slides.map((_, i) => (
+          <div
+            key={i}
+            className={`dot ${i === current ? "active" : ""}`}
+            onClick={() => setCurrent(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
