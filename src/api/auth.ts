@@ -1,43 +1,45 @@
+import { http } from "./http";
+
 export type RegisterPayload = {
-	name: string;
-	email: string;
-	password: string;
-	confirmPassword: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 
 export type LoginPayload = {
-	email: string;
-	password: string;
+  email: string;
+  password: string;
 };
 
-export type UserProfile = {
-	id: string;
-	name: string;
-	email: string;
-};
 export interface User {
-	_id: string;
-	name: string;
-	email: string;
-	role: "CUSTOMER" | "ADMIN" | "VENDOR";
-	createdAt: string;
-	updatedAt: string;
-	__v: number;
+  _id: string; // ✅ MUST exist
+  email: string;
+
+  role: "CUSTOMER" | "ADMIN" | "VENDOR";
 }
 
-import { http } from "./http";
-
+/* REGISTER */
 export const registerUser = async (payload: RegisterPayload) => {
-	const res = await http.post("/auth/register", payload);
-	return res.data;
+  if (payload.password !== payload.confirmPassword) {
+    throw new Error("Passwords do not match");
+  }
+
+  const res = await http.post("/auth/signup", {
+    name: payload.name,
+    email: payload.email,
+    password: payload.password,
+  });
+
+  return res.data;
 };
 
+/* LOGIN */
 export const loginUser = async (payload: LoginPayload) => {
-	const res = await http.post("/auth/login", payload);
-	return res.data;
-};
+  const res = await http.post("/auth/login", payload);
 
-export const getUserProfile = async (id: string): Promise<UserProfile> => {
-	const res = await http.get(`/auth/profile/${id}`);
-	return res.data;
+  // 🔥 VERY IMPORTANT
+  localStorage.setItem("token", res.data.token);
+
+  return res.data;
 };

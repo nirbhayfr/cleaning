@@ -21,113 +21,69 @@ import OrdersLayout from "./components/orders/OrderLayout";
 import OrdersPage from "./components/orders/OrderPage";
 import ProtectedRoute from "./ProtectedRoutes";
 import ProfilePage from "./components/profile/ProfilePage";
+import TopDealsPage from "./components/top-deals/TopDealsPage";
 
 const queryClient = new QueryClient();
 
 function App() {
-	return (
-		<QueryClientProvider client={queryClient}>
-			<Provider store={store}>
-				<Toaster position="bottom-right" richColors />
-				<BrowserRouter>
-					<Routes>
-						<Route path="/login" element={<Login />} />
-						<Route
-							path="/register"
-							element={<RegisterPage />}
-						/>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Toaster position="bottom-right" richColors />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-						<Route
-							element={
-								<ProtectedRoute
-									allowedRoles={[
-										"CUSTOMER",
-										"VENDOR",
-										"ADMIN",
-									]}
-								/>
-							}
-						>
-							<Route path="/cart" element={<CartPage />} />
-							<Route
-								path="/profile"
-								element={<ProfilePage />}
-							/>
-							<Route
-								path="/checkout"
-								element={<CheckoutPage />}
-							/>
-						</Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  allowedRoles={["CUSTOMER", "VENDOR", "ADMIN"]}
+                />
+              }
+            >
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+            </Route>
 
-						<Route path="/" element={<AppLayout />}>
-							<Route index element={<Homepage />} />
-						</Route>
+            <Route path="/" element={<AppLayout />}>
+              <Route index element={<Homepage />} />
+            </Route>
 
-						<Route
-							path="/products"
-							element={<ProductLayout />}
-						>
-							<Route index element={<ProductPage />} />
-						</Route>
+            <Route path="/products" element={<ProductLayout />}>
+              <Route index element={<ProductPage />} />
+            </Route>
+            <Route path="/top-deals" element={<TopDealsPage />} />
 
-						<Route
-							path="/admin"
-							element={
-								<ProtectedRoute
-									allowedRoles={["ADMIN"]}
-								/>
-							}
-						>
-							<Route element={<AdminLayout />}>
-								<Route
-									index
-									element={
-										<Navigate
-											to="/admin/home"
-											replace
-										/>
-									}
-								/>
-								<Route
-									path="home"
-									element={<AdminHomepage />}
-								/>
-								<Route
-									path="category"
-									element={<AdminCategoryPage />}
-								/>
-								<Route
-									path="products"
-									element={<AdminProductPage />}
-								/>
-								<Route
-									path="orders"
-									element={<AdminOrdersPage />}
-								/>
-							</Route>
-						</Route>
+            <Route
+              path="/admin"
+              element={<ProtectedRoute allowedRoles={["ADMIN"]} />}
+            >
+              <Route element={<AdminLayout />}>
+                <Route index element={<Navigate to="/admin/home" replace />} />
+                <Route path="home" element={<AdminHomepage />} />
+                <Route path="category" element={<AdminCategoryPage />} />
+                <Route path="products" element={<AdminProductPage />} />
 
-						<Route
-							path="/orders"
-							element={
-								<ProtectedRoute
-									allowedRoles={["VENDOR", "ADMIN"]}
-								/>
-							}
-						>
-							<Route element={<OrdersLayout />}>
-								<Route index element={<OrdersPage />} />
-								<Route
-									path="myorders"
-									element={<MyOrders />}
-								/>
-							</Route>
-						</Route>
-					</Routes>
-				</BrowserRouter>
-			</Provider>
-		</QueryClientProvider>
-	);
+                <Route path="orders" element={<AdminOrdersPage />} />
+              </Route>
+            </Route>
+
+            <Route
+              path="/orders"
+              element={<ProtectedRoute allowedRoles={["VENDOR", "ADMIN"]} />}
+            >
+              <Route element={<OrdersLayout />}>
+                <Route index element={<OrdersPage />} />
+                <Route path="myorders" element={<MyOrders />} />
+              </Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
+  );
 }
 
 export default App;
